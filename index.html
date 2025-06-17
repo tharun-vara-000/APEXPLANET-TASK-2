@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bright Contact Form & To-Do List</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #fc466b, #3f5efb);
+      padding: 20px;
+      color: white;
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 30px;
+    }
+
+    .card {
+      background: #ffffffee;
+      padding: 25px;
+      margin: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+
+    h2 {
+      color: #ff4e00;
+      margin-bottom: 15px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    input {
+      background-color: #f1f1f1;
+    }
+
+    button {
+      background: linear-gradient(to right, #43e97b, #38f9d7);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #fceabb, #f8b500);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #e0f7fa;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      background: #c8e6c9;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🌟 Internship Project – Bright Contact Form & To-Do List 🌈
+  </header>
+
+  <div class="container">
+    <!-- Contact Form -->
+    <div class="card">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- To-Do List -->
+    <div class="card">
+      <h2>To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a task">
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Form Validation
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      const email = document.getElementById("email").value;
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        alert("Please enter a valid email!");
+        e.preventDefault();
+      } else {
+        alert("Form submitted successfully!");
+      }
+    });
+
+    // To-Do List
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+      if (taskText === "") return;
+
+      const li = document.createElement("li");
+      li.textContent = taskText;
+
+      // Complete toggle
+      li.onclick = () => li.classList.toggle("completed");
+
+      // Delete button
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "❌";
+      delBtn.style.marginLeft = "10px";
+      delBtn.style.background = "transparent";
+      delBtn.style.border = "none";
+      delBtn.style.cursor = "pointer";
+      delBtn.onclick = (e) => {
+        e.stopPropagation();
+        li.remove();
+      };
+
+      li.appendChild(delBtn);
+      document.getElementById("taskList").appendChild(li);
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
